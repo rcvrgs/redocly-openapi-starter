@@ -1,0 +1,529 @@
+openapi: "3.0.0"
+
+info:
+  version: 2.0.0
+  title: The One API
+  description:
+  termsOfService: "https://openweathermap.org/terms"
+  contact:
+    name: The One API
+    url: https://the-one-api.dev/
+
+security:
+  - bearerAuth: []
+
+servers:
+  - url: https://the-one-api.dev/v2
+
+paths:
+  /book:
+    get:
+      operationId: listBooks
+      summary: List of all "The Lord of the Rings" books
+      parameters:
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/offset"
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Books"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /book/{id}:
+    get:
+      operationId: getBook
+      summary: Request one specific book
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the book
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Books"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /book/{id}/chapter:
+    get:
+      operationId: listBookChapters
+      summary: Request all chapters of one specific book
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the book
+          schema:
+            type: string
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/offset"
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Chapters"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /movie:
+    get:
+      operationId: listMovies
+      summary: List of all movies, including the "The Lord of the Rings" and the "The Hobbit" trilogies
+      parameters:
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/offset"
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movies"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /movie/{id}:
+    get:
+      operationId: getMovie
+      summary: Request one specific movie
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the movie
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movies"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /movie/{id}/quote:
+    get:
+      operationId: listMovieQuotes
+      summary: Request all movie quotes for one specific movie (only working for the LotR trilogy)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the movie
+          schema:
+            type: string
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/offset"
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quotes"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /character:
+    get:
+      operationId: listCharacters
+      summary: List of characters including metadata like name, gender, realm, race and more
+      parameters:
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/offset"
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Characters"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /character/{id}:
+    get:
+      operationId: getCharacter
+      summary: Request one specific character
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the character
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Characters"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /character/{id}/quote:
+    get:
+      operationId: listCharacterQuotes
+      summary: Request all movie quotes of one specific character
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the character
+          schema:
+            type: string
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/offset"
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quotes"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /quote:
+    get:
+      operationId: listQuotes
+      summary: List of all movie quotes
+      parameters:
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/offset"
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quotes"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /quote/{id}:
+    get:
+      operationId: getQuote
+      summary: Request one specific movie quote
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the quote
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quotes"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /chapter:
+    get:
+      operationId: listChapters
+      summary: List of all book chapters
+      parameters:
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/offset"
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Chapters"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /chapter/{id}:
+    get:
+      operationId: getChapter
+      summary: Request one specific book chapter
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the chapter
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Chapters"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        name:
+          type: string
+        _id:
+          type: string
+
+    Chapter:
+      type: object
+      properties:
+        chapterName:
+          type: string
+        book:
+          type: string
+        _id:
+          type: string
+
+    Character:
+      type: object
+      properties:
+        name:
+          type: string
+        wikiUrl:
+          type: string
+        race:
+          type: string
+        birth:
+          type: string
+        gender:
+          type: string
+        death:
+          type: string
+        hair:
+          type: string
+        height:
+          type: string
+        realm:
+          type: string
+        spouse:
+          type: string
+        _id:
+          type: string
+
+    Movie:
+      type: object
+      properties:
+        name:
+          type: string
+        runtimeInMinutes:
+          type: integer
+        budgetInMillions:
+          type: integer
+        boxOfficeRevenueInMillions:
+          type: number
+        academyAwardNominations:
+          type: integer
+        academyAwardWins:
+          type: integer
+        rottenTomatoesScore:
+          type: number
+        _id:
+          type: string
+
+    Quote:
+      type: object
+      properties:
+        dialog:
+          type: string
+        movie:
+          type: string
+        character:
+          type: string
+        _id:
+          type: string
+
+    Books:
+      type: object
+      properties:
+        doc:
+          type: array
+          items:
+            $ref: "#/components/schemas/Book"
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+
+    Movies:
+      type: object
+      properties:
+        doc:
+          type: array
+          items:
+            $ref: "#/components/schemas/Movie"
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+
+    Chapters:
+      type: object
+      properties:
+        doc:
+          type: array
+          items:
+            $ref: "#/components/schemas/Chapter"
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+
+    Characters:
+      type: object
+      properties:
+        doc:
+          type: array
+          items:
+            $ref: "#/components/schemas/Character"
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+
+    Quotes:
+      type: object
+      properties:
+        doc:
+          type: array
+          items:
+            $ref: "#/components/schemas/Quote"
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+
+    Error:
+      type: any
+
+  Parameters:
+    limit:
+      name: limit
+      in: query
+      description: For pagination, the number of items/page.
+      schema:
+        type: integer
+
+    page:
+      name: page
+      in: query
+      description: For pagination, the page you want.
+      schema:
+        type: integer
+
+    offset:
+      name: offset
+      in: query
+      description: For pagination, the offset to begin paging at.
+      schema:
+        type: integer
